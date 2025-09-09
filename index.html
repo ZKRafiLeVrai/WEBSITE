@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hub Créateur Roblox - API Edition</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHZpZXdCb3g9IjAgMCA0MCA0MCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHJlY3Qgd2lkdGg9IjQwIiBoZWlnaHQ9IjQwIiByeD0iOCIgZmlsbD0iIzAwQTJGRiIvPgo8dGV4dCB4PSIyMCIgeT0iMjgiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGZpbGw9IndoaXRlIiBmb250LXNpemU9IjE2IiBmb250LXdlaWdodD0iYm9sZCI+UjwvdGV4dD4KPHN2Zz4K" alt="Roblox">
+                <span>Hub Créateur Roblox</span>
+            </div>
+            <div class="user-info" id="userInfo" style="display: none;">
+                <img id="userAvatar" class="avatar" alt="Avatar">
+                <div class="user-details">
+                    <span id="userName">Utilisateur</span>
+                    <span id="userStatus" class="status">En ligne</span>
+                </div>
+                <button class="btn btn-secondary" onclick="logout()">
+                    <i>🚪</i> Déconnexion
+                </button>
+            </div>
+        </header>
+
+        <!-- Loading Spinner -->
+        <div class="loading" id="loadingSpinner">
+            <div class="spinner"></div>
+            <p>Connexion à l'API Roblox...</p>
+        </div>
+
+        <!-- Login Section -->
+        <main class="login-section" id="loginSection">
+            <div class="login-card">
+                <h1>🎮 Connectez votre compte Roblox</h1>
+                <p class="subtitle">Accédez à vos statistiques et gérez vos créations</p>
+                
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="input-group">
+                        <label for="robloxUsername">
+                            <i>👤</i> Nom d'utilisateur Roblox
+                        </label>
+                        <input 
+                            type="text" 
+                            id="robloxUsername" 
+                            placeholder="Entrez votre nom d'utilisateur"
+                            required
+                            autocomplete="username"
+                        >
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary">
+                        <i>🔗</i> Se connecter
+                    </button>
+                </form>
+
+                <div class="api-info">
+                    <h3>🔌 APIs utilisées :</h3>
+                    <ul>
+                        <li><strong>Users API</strong> - Informations utilisateur</li>
+                        <li><strong>Games API</strong> - Liste des jeux et statistiques</li>
+                        <li><strong>Avatar API</strong> - Images de profil</li>
+                        <li><strong>Economy API</strong> - Données financières</li>
+                        <li><strong>Thumbnails API</strong> - Miniatures des jeux</li>
+                    </ul>
+                </div>
+
+                <div class="hosting-info">
+                    <h3>🚀 Hébergement Gratuit</h3>
+                    <p>Déployez ce site sur :</p>
+                    <div class="hosting-platforms">
+                        <span class="platform">Netlify</span>
+                        <span class="platform">Vercel</span>
+                        <span class="platform">GitHub Pages</span>
+                        <span class="platform">Firebase</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Dashboard -->
+        <div class="dashboard" id="dashboard">
+            <!-- Navigation Tabs -->
+            <nav class="nav-tabs">
+                <button class="nav-tab active" data-tab="overview">
+                    <i>📊</i> Vue d'ensemble
+                </button>
+                <button class="nav-tab" data-tab="games">
+                    <i>🎮</i> Mes Jeux
+                </button>
+                <button class="nav-tab" data-tab="analytics">
+                    <i>📈</i> Analytiques
+                </button>
+                <button class="nav-tab" data-tab="profile">
+                    <i>⚙️</i> Profil
+                </button>
+            </nav>
+
+            <!-- Overview Tab -->
+            <div class="tab-content active" id="overview">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-number" id="totalVisits">-</div>
+                        <div class="stat-label">Visites Totales</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="visitsProgress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">🎮</div>
+                        <div class="stat-number" id="totalGames">-</div>
+                        <div class="stat-label">Jeux Créés</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="gamesProgress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">💎</div>
+                        <div class="stat-number" id="totalRobux">-</div>
+                        <div class="stat-label">Robux Estimés</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="robuxProgress"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-card">
+                        <div class="stat-icon">⭐</div>
+                        <div class="stat-number" id="totalFavorites">-</div>
+                        <div class="stat-label">Favoris</div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="favoritesProgress"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h2>📈 Évolution des visites</h2>
+                    <canvas id="visitsChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Games Tab -->
+            <div class="tab-content" id="games">
+                <div class="games-header">
+                    <h2>🎮 Mes Jeux Roblox</h2>
+                    <button class="btn" onclick="refreshGames()">
+                        <i>🔄</i> Actualiser
+                    </button>
+                </div>
+                <div class="games-grid" id="gamesGrid">
+                    <!-- Games will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Analytics Tab -->
+            <div class="tab-content" id="analytics">
+                <div class="analytics-grid">
+                    <div class="chart-container">
+                        <h3>📊 Répartition des visites par jeu</h3>
+                        <canvas id="gamesChart"></canvas>
+                    </div>
+                    
+                    <div class="chart-container">
+                        <h3>⭐ Popularité des jeux</h3>
+                        <canvas id="popularityChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="analytics-table">
+                    <h3>📋 Détails des performances</h3>
+                    <div class="table-container" id="analyticsTable">
+                        <!-- Analytics table will be loaded here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Profile Tab -->
+            <div class="tab-content" id="profile">
+                <div class="profile-section">
+                    <div class="profile-header">
+                        <img id="profileAvatar" class="profile-avatar" alt="Avatar">
+                        <div class="profile-info">
+                            <h2 id="profileUsername">Nom d'utilisateur</h2>
+                            <p id="profileJoinDate">Membre depuis</p>
+                            <p id="profileDescription">Description</p>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <span class="stat-value" id="profileFriends">-</span>
+                            <span class="stat-name">Amis</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-value" id="profileFollowers">-</span>
+                            <span class="stat-name">Abonnés</span>
+                        </div>
+                        <div class="profile-stat">
+                            <span class="stat-value" id="profileFollowing">-</span>
+                            <span class="stat-name">Abonnements</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn" onclick="exportData()">
+                            <i>📤</i> Exporter les données
+                        </button>
+                        <button class="btn btn-secondary" onclick="refreshProfile()">
+                            <i>🔄</i> Actualiser le profil
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Error Modal -->
+        <div class="modal" id="errorModal">
+            <div class="modal-content">
+                <h3>❌ Erreur</h3>
+                <p id="errorMessage"></p>
+                <button class="btn" onclick="closeModal()">Fermer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
