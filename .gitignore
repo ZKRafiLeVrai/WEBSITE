@@ -1,0 +1,26 @@
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Dossiers temporaires
+tmp/
+temp/
+.cache/
+node_modules/
+
+# Fichiers de configuration locaux
+.env
+*.local
+
+# Dossiers de build (si tu utilises un bundler)
+dist/
+build/
+
+# Éditeurs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
