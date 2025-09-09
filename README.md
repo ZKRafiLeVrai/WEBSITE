@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 \# 🎮 Hub Créateur Roblox - API Edition
 
 
@@ -508,3 +509,6 @@ Les contributions sont les bienvenues ! Pour contribuer :
 
 \*\*Note\*\* : Ce projet n'est pas affilié à Roblox Corporation. Il s'agit d'un outil communautaire utilisant les APIs publiques de Roblox.
 
+=======
+# ROBLOX-FAKE-CREATOR-HUB
+>>>>>>> 0c25cb939ff72b3e1f0c24408f32d51280c93fef
