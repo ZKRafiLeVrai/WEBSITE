@@ -39,10 +39,15 @@ function setupEventListeners() {
         });
     });
 
-    // Gestion du formulaire de connexion
-    const loginForm = document.getElementById('loginForm');
-    if (loginForm) {
-        loginForm.addEventListener('submit', handleLogin);
+    // Gestion de l'entrée dans le champ username
+    const usernameInput = document.getElementById('robloxUsername');
+    if (usernameInput) {
+        usernameInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                handleLogin();
+            }
+        });
     }
 
     // Gestion de la fermeture des modales
