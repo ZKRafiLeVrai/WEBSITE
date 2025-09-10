@@ -39,7 +39,7 @@
                 <h1>🎮 Connectez votre compte Roblox</h1>
                 <p class="subtitle">Accédez à vos statistiques et gérez vos créations</p>
                 
-                <form id="loginForm" onsubmit="handleLogin(event)">
+                <div id="loginForm">
                     <div class="input-group">
                         <label for="robloxUsername">
                             <i>👤</i> Nom d'utilisateur Roblox
@@ -48,15 +48,14 @@
                             type="text" 
                             id="robloxUsername" 
                             placeholder="Entrez votre nom d'utilisateur"
-                            required
                             autocomplete="username"
                         >
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">
+                    <button type="button" class="btn btn-primary" onclick="handleLogin()">
                         <i>🔗</i> Se connecter
                     </button>
-                </form>
+                </div>
 
                 <div class="api-info">
                     <h3>🔌 APIs utilisées :</h3>
